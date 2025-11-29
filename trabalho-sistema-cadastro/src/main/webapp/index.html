@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cadastro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Cadastro</h1>
+        
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('colaboradores')">Colaboradores</button>
+            <button class="tab-button" onclick="showTab('cargos')">Cargos</button>
+            <button class="tab-button" onclick="showTab('produtos')">Produtos</button>
+            <button class="tab-button" onclick="showTab('categorias')">Categorias</button>
+            <button class="tab-button" onclick="showTab('vendas')">Vendas</button>
+        </div>
+
+        <!-- Colaboradores -->
+        <div id="colaboradores" class="tab-content active">
+            <div class="section">
+                <h2>Gerenciar Colaboradores</h2>
+                
+                <div class="search-box">
+                    <input type="text" id="searchColaboradorId" placeholder="Buscar por ID">
+                    <button onclick="searchColaborador()">Buscar</button>
+                </div>
+
+                <form id="colaboradorForm" class="form">
+                    <input type="hidden" id="colaboradorId">
+                    <input type="text" id="colaboradorNome" placeholder="Nome" required>
+                    <input type="text" id="colaboradorCpf" placeholder="CPF" required>
+                    <input type="date" id="colaboradorData" placeholder="Data de Nascimento" required>
+                    <select id="colaboradorCargo">
+                        <option value="">Selecione um Cargo</option>
+                    </select>
+                    <div class="form-buttons">
+                        <button type="submit">Salvar</button>
+                        <button type="button" onclick="clearColaboradorForm()">Limpar</button>
+                    </div>
+                </form>
+
+                <div class="list">
+                    <h3>Lista de Colaboradores</h3>
+                    <button onclick="loadColaboradores()" class="refresh-btn">Atualizar Lista</button>
+                    <table id="colaboradoresTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Data Nascimento</th>
+                                <th>Cargo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cargos -->
+        <div id="cargos" class="tab-content">
+            <div class="section">
+                <h2>Gerenciar Cargos</h2>
+                
+                <div class="search-box">
+                    <input type="text" id="searchCargoId" placeholder="Buscar por ID">
+                    <button onclick="searchCargo()">Buscar</button>
+                </div>
+
+                <form id="cargoForm" class="form">
+                    <input type="hidden" id="cargoId">
+                    <input type="text" id="cargoNome" placeholder="Nome" required>
+                    <input type="text" id="cargoFuncao" placeholder="Função" required>
+                    <div class="form-buttons">
+                        <button type="submit">Salvar</button>
+                        <button type="button" onclick="clearCargoForm()">Limpar</button>
+                    </div>
+                </form>
+
+                <div class="list">
+                    <h3>Lista de Cargos</h3>
+                    <button onclick="loadCargos()" class="refresh-btn">Atualizar Lista</button>
+                    <table id="cargosTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Função</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Produtos -->
+        <div id="produtos" class="tab-content">
+            <div class="section">
+                <h2>Gerenciar Produtos</h2>
+                
+                <div class="search-box">
+                    <input type="text" id="searchProdutoId" placeholder="Buscar por ID">
+                    <button onclick="searchProduto()">Buscar</button>
+                </div>
+
+                <form id="produtoForm" class="form">
+                    <input type="hidden" id="produtoId">
+                    <input type="text" id="produtoNome" placeholder="Nome" required>
+                    <input type="number" id="produtoQuantidade" placeholder="Quantidade" required>
+                    <input type="text" id="produtoPreco" placeholder="Preço (R$)" required>
+                    <input type="text" id="produtoStatus" placeholder="Status" required>
+                    <select id="produtoCategoria">
+                        <option value="">Selecione uma Categoria</option>
+                    </select>
+                    <div class="form-buttons">
+                        <button type="submit">Salvar</button>
+                        <button type="button" onclick="clearProdutoForm()">Limpar</button>
+                    </div>
+                </form>
+
+                <div class="list">
+                    <h3>Lista de Produtos</h3>
+                    <button onclick="loadProdutos()" class="refresh-btn">Atualizar Lista</button>
+                    <table id="produtosTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Quantidade</th>
+                                <th>Preço</th>
+                                <th>Status</th>
+                                <th>Categoria</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categorias -->
+        <div id="categorias" class="tab-content">
+            <div class="section">
+                <h2>Gerenciar Categorias</h2>
+                
+                <div class="search-box">
+                    <input type="text" id="searchCategoriaId" placeholder="Buscar por ID">
+                    <button onclick="searchCategoria()">Buscar</button>
+                </div>
+
+                <form id="categoriaForm" class="form">
+                    <input type="hidden" id="categoriaId">
+                    <input type="text" id="categoriaNome" placeholder="Nome" required>
+                    <input type="text" id="categoriaTipo" placeholder="Tipo" required>
+                    <div class="form-buttons">
+                        <button type="submit">Salvar</button>
+                        <button type="button" onclick="clearCategoriaForm()">Limpar</button>
+                    </div>
+                </form>
+
+                <div class="list">
+                    <h3>Lista de Categorias</h3>
+                    <button onclick="loadCategorias()" class="refresh-btn">Atualizar Lista</button>
+                    <table id="categoriasTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Tipo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vendas -->
+        <div id="vendas" class="tab-content">
+            <div class="section">
+                <h2>Gerenciar Vendas</h2>
+                
+                <div class="search-box">
+                    <input type="text" id="searchVendaId" placeholder="Buscar por ID">
+                    <button onclick="searchVenda()">Buscar</button>
+                </div>
+
+                <form id="vendaForm" class="form">
+                    <input type="hidden" id="vendaId">
+                    <select id="vendaColaborador" required>
+                        <option value="">Selecione um Colaborador</option>
+                    </select>
+                    
+                    <div class="produtos-venda">
+                        <h4>Produtos da Venda</h4>
+                        <div id="itensVenda"></div>
+                        <button type="button" onclick="adicionarItemVenda()" class="btn-add-item">+ Adicionar Produto</button>
+                    </div>
+                    
+                    <div class="total-venda">
+                        <strong>Valor Total: R$ <span id="valorTotalVenda">0,00</span></strong>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="submit">Salvar Venda</button>
+                        <button type="button" onclick="clearVendaForm()">Limpar</button>
+                    </div>
+                </form>
+
+                <div class="list">
+                    <h3>Lista de Vendas</h3>
+                    <button onclick="loadVendas()" class="refresh-btn">Atualizar Lista</button>
+                    <table id="vendasTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Colaborador</th>
+                                <th>Data</th>
+                                <th>Valor Total</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
