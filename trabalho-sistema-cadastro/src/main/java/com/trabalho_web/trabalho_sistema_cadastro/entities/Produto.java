@@ -26,6 +26,10 @@ public class Produto {
     private Double preco;
     private String status;
 
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = true)
+    private Categoria categoria;
+
  public Produto(String nome, Integer quantidade, Double preco, String status) {
         this.nome = nome;
         this.quantidade = quantidade;
